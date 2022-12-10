@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Tienda_Ropa.Models.Producto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid ">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Lista de Productos</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Producto" asp-action="Upsert" class="btn btn-primary" >
+                <i class="fas fa-plus"></i>  Nueva Productos</a>
+        </div>
+    </div>
+    <br/>
+
+    @if (Model.Count() > 0)
+    {   <div class="table-responsive" style="overflow-x:visible">
+            <table class="table table-bordered table-striped w-auto" style="width:100% ; z-index:1">
+                <thead>
+                    <tr class="d-flex">
+                        <th class="col-1"> Nombre Producto</th>
+                        <th class="col-1">Precio</th>
+                        <th class="col-1">Descripcion Chica</th>
+                        <th class="col-2">Descripcion Grande</th>
+                        <th class="col-1">Categoria</th>
+                        <th class="col-1">Tipo Aplicacion</th>
+                        <th class="col-1">Stock Talle Chico</th>
+                        <th class="col-1">Stock Talle Medio</th>
+                        <th class="col-1">Stock Talle Grande</th>
+                        <th class="col-2">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                            <tr class="d-flex">
+                                <th width="50%"class="col-1">@item.Nombre</th>
+                                <th width="50%"class="col-1">@item.Precio</th>
+                                <th width="50%"class="col-1">@item.DescripcionCorta</th>
+                                <th width="50%"class="col-2">@item.DescripcionLarga</th>
+                                <th width="50%"class="col-1">@item.categoria.NombreCategoria</th>
+                                <th width="50%"class="col-1">@item.TipoAplicacion.Nombre</th>
+                                <th width="50%"class="col-1">@item.Stock_Chico</th>
+                                <th width="50%"class="col-1">@item.Stock_Medio</th>
+                                <th width="50%"class="col-1">@item.Stock_Grande</th>
+                                <th class="text-center col-2">
+
+                                    <div class="dropdown" >
+                                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Opciones
+                                      </button>
+                                        
+                                      <ul class="dropdown-menu" style="z-index:10000" aria-labelledby="dropdownMenuButton1">
+                                        <a asp-controller="Producto" asp-action="Upsert" asp-route-Id="@item.Id" class="btn btn-primary dropdown-item ">
+                                          <i class="fa-solid fa-marker"></i>  Editar 
+                                        </a>
+                                        <a asp-controller="Producto" asp-action="Eliminar" asp-route-Id="@item.Id" class="btn btn-danger dropdown-item">
+                                           <i class="fa-regular fa-trash-can"></i> Eliminar
+                                        </a>
+                                      </ul>
+
+
+                                    </div>
+
+                                </th>
+                            </tr>
+                }
+                </tbody>
+            </table>
+            </div>
+    }
+    else
+    {
+            <p>No hay registros de Productos </p>
+    }
+</div>
+

@@ -1,0 +1,127 @@
+﻿@model Tienda_Ropa.Models.ViewModels.ProductoVM
+@{
+    var titulo = "Crear Nuevo Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post"  asp-action="Upsert" enctype="multipart/form-data">
+
+    @if (Model.producto.Id != 0)
+    { titulo = "Editar Producto";
+        <input asp-for="producto.Id" hidden/>
+    }
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <h2 class="text-info">@titulo</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="container">
+                    <div class="row">
+                        <label asp-for="producto.Nombre" class="form-label">Nombre Producto</label>
+                        <input asp-for="producto.Nombre" class="form-control" />
+                        <span asp-validation-for="producto.Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.Precio" class="form-label">Precio</label>
+                        <input asp-for="producto.Precio" class="form-control" />
+                        <span asp-validation-for="producto.Precio" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.DescripcionCorta" class="form-label">Descripcion Corta del Producto</label>
+                        <input asp-for="producto.DescripcionCorta" class="form-control" />
+                        <span asp-validation-for="producto.DescripcionCorta" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.DescripcionLarga" class="form-label">Descripcion larga del Producto</label>
+                        <input asp-for="producto.DescripcionLarga" class="form-control"/>
+                        <span asp-validation-for="producto.DescripcionLarga" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.CategoriaId" class="form-label">Sexo</label>
+                        <select asp-for="producto.CategoriaId" asp-items="@Model.CategoriaLista" class="form-select">
+                            <option disabled selected> Seleccione un Sexo
+
+                            </option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.TipoAplicacionId" class="form-label">Tipo de Evento</label>
+                        <select asp-for="producto.TipoAplicacionId" asp-items="@Model.TipoAplicacionLista" class="form-select">
+                            <option disabled selected> Seleccione un Evento
+
+                            </option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.Stock_Chico" class="form-label">Stock Talle chico o Small</label>
+                        <input asp-for="producto.Stock_Chico" class="form-control" />
+                        <span asp-validation-for="producto.Stock_Chico" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.Stock_Medio" class="form-label">Stock Talle Medio o Medium</label>
+                        <input asp-for="producto.Stock_Medio" class="form-control" />
+                        <span asp-validation-for="producto.Stock_Medio" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.Stock_Grande" class="form-label">Stock Talle Largo o Large</label>
+                        <input asp-for="producto.Stock_Grande" class="form-control" />
+                        <span asp-validation-for="producto.Stock_Grande" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for="producto.ImagenUrl" class="form-label">Imagen Url</label>
+                        <input type="file" name="files" id="ImagenId" class="form-control" />
+                    </div>
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+                        @if (Model.producto.Id != 0)
+                        {
+                            <button type="sumit" class="btn btn-primary">Actualizar Producto</button>
+                        }else
+                        {
+                            <button type="sumit" onclick="return validarImagen()" class="btn btn-primary">Crear Nuevo Producto</button>                                
+                        }
+                            <a asp-controller="Producto" asp-action="Index" class="btn btn-success">Regresar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @if(Model.producto.Id != 0)
+                {
+                    <img src="@WC.ImagenRuta@Model.producto.ImagenUrl"  style="border-radius:5px;max-height:400px; border:1px solid #bbb"/>
+                }
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+@section Scripts
+    {
+    @{
+    <partial name="_ValidationScriptsPartial"></partial>
+    }
+
+    <script>
+
+        function validarImagen()
+        {
+            if(document.getElementById("ImagenId").value == "")
+            {
+                swal("Error","Seleccione una imagen","error");
+                return false;
+            }
+                return true;
+        }
+
+    </script>
+
+    }

@@ -1,0 +1,102 @@
+﻿@model Tienda_Ropa.Models.Producto
+@{
+    var titulo = "Esta seguro de eliminar el Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post"  asp-action="Eliminar">
+
+        <input asp-for="Id" hidden/>
+    
+
+    <div class="border p-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <h2 class="text-danger">@titulo</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="container">
+                    <div class="row">
+                        <label asp-for="Nombre" class="form-label">Nombre Producto</label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for=" Precio" class="form-label">Precio</label>
+                        <input asp-for=" Precio" class="form-control" />
+                        <span asp-validation-for=" Precio" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for=" DescripcionCorta" class="form-label">Descripcion Corta del Producto</label>
+                        <input asp-for=" DescripcionCorta" class="form-control" />
+                        <span asp-validation-for=" DescripcionCorta" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label asp-for=" DescripcionLarga" class="form-label">Descripcion larga del Producto</label>
+                        <input asp-for=" DescripcionLarga" class="form-control"/>
+                        <span asp-validation-for=" DescripcionLarga" class="text-danger"></span>
+                    </div>
+                    <div class="row" >
+                        <label asp-for=" CategoriaId" class="form-label">Sexo</label>
+                        <input asp-for=" CategoriaId" hidden class="form-select">
+                        <input asp-for="categoria.NombreCategoria" />
+                    </div>
+                    <div class="row" hidden>
+                        <label asp-for=" TipoAplicacionId" class="form-label">Tipo de Evento</label>
+                        <input asp-for=" TipoAplicacionId" hidden class="form-select">
+                        <input asp-for="TipoAplicacion.Nombre" />
+                    </div>
+                    <div class="row" hidden>
+                        <label asp-for=" Stock_Chico" class="form-label">Stock Talle chico o Small</label>
+                        <input asp-for=" Stock_Chico" class="form-control" />
+                        <span asp-validation-for=" Stock_Chico" class="text-danger"></span>
+                    </div>
+                    <div class="row" hidden>
+                        <label asp-for=" Stock_Medio" class="form-label">Stock Talle Medio o Medium</label>
+                        <input asp-for=" Stock_Medio" class="form-control" />
+                        <span asp-validation-for=" Stock_Medio" class="text-danger"></span>
+                    </div>
+                    <div class="row" hidden>
+                        <label asp-for=" Stock_Grande" class="form-label">Stock Talle Largo o Large</label>
+                        <input asp-for=" Stock_Grande" class="form-control" />
+                        <span asp-validation-for=" Stock_Grande" class="text-danger"></span>
+                    </div>
+                    <div class="row" hidden>
+                        <label asp-for=" ImagenUrl" class="form-label">Imagen Url</label>
+                        <input asp-for="ImagenUrl"/>
+                    </div>
+
+                    <br />
+
+                    <div class="d-grid gap-2 d-md-block">
+
+                            <button type="sumit" class="btn btn-primary">Eliminar Producto</button>                                
+                        
+                            <a asp-controller="Producto" asp-action="Index" class="btn btn-success">Regresar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @if(Model.Id != 0)
+                {
+                    <img src="@WC.ImagenRuta@Model.ImagenUrl"  style="border-radius:5px;max-height:400px; border:1px solid #bbb"/>
+                }
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+@section Scripts
+    {
+    @{
+    <partial name="_ValidationScriptsPartial"></partial>
+    }
+
+    }
+
