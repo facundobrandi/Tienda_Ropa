@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Tienda_Ropa.Datos;
@@ -41,6 +42,18 @@ namespace Tienda_Ropa.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Detalle(int Id) 
+        {
+            DetalleVM detalleVM = new DetalleVM()
+            {
+                producto = _db.Producto.Include(c => c.categoria).Include(t => t.TipoAplicacion).Where(p => p.Id == Id).FirstOrDefault(),
+                ExiteEnCarro =false,
+            };
+
+            return View(detalleVM);
+        
         }
     }
 }

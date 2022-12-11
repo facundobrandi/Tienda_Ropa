@@ -17,13 +17,13 @@ namespace Tienda_Ropa.Models
         [Required(ErrorMessage = "Este campo es Obligatorio.")]
         public string DescripcionLarga { get; set; }
         [Required(ErrorMessage = "Este campo es Obligatorio.")]
-        [Range(1, int.MaxValue, ErrorMessage = "El stock no puede ser negativo o 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo o 0.")]
         public int Stock_Chico { get; set; }
         [Required(ErrorMessage = "Este campo es Obligatorio.")]
-        [Range(1, int.MaxValue, ErrorMessage = "El stock no puede ser negativo o 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo o 0.")]
         public int Stock_Medio { get; set; }
         [Required(ErrorMessage = "Este campo es Obligatorio.")]
-        [Range(1, int.MaxValue, ErrorMessage = "El stock no puede ser negativo o 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo o 0.")]
         public int Stock_Grande { get; set; }
         public string? ImagenUrl { get; set; }
 
