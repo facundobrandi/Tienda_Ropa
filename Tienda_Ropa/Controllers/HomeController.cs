@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.VisualBasic;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Tienda_Ropa.Datos;
 using Tienda_Ropa.Models;
 using Tienda_Ropa.Models.ViewModels;
+using Tienda_Ropa.Utilidades;
 
 namespace Tienda_Ropa.Controllers
 {
@@ -55,5 +57,24 @@ namespace Tienda_Ropa.Controllers
             return View(detalleVM);
         
         }
+
+
+        [HttpPost,ActionName("Detalle")]
+        
+        public IActionResult DetallePost(int Id) 
+        {
+            List<CarroCompra> carroCompras = new List<CarroCompra>();
+
+            if (HttpContext.Session.Get<IEnumerable<CarroCompra>>(WC.SessionCarroCompras) != null
+                && HttpContext.Session.Get<IEnumerable<CarroCompra>>(WC.SessionCarroCompras).Count() > 0)
+            {
+                carroCompras = HttpContext.Session.Get<List<CarroCompra>>(WC.SessionCarroCompras); 
+            }
+            carroCompras.Add(new CarroCompra { ProductoId = Id });
+            HttpContext.Session.Set(WC.SessionCarroCompras, carroCompras);
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

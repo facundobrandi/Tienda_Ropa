@@ -6,7 +6,7 @@
 
 <div class="">
     <form method="post">
-
+        <input  hidden asp-for="@Model.producto.Id"/>
         <div class="container backgroundWhite pt-4"  >
             <div class="card" style="border:1px solid #000000; ">
                 <div class="card-header bg-dark text-light row container" style="border-radius: 0px;margin-left:0px">
@@ -35,32 +35,44 @@
                                     </div>
                                      <div class="col-12">
                                          <h3>Talles</h3>
-                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                        <div class="form-check form-check-inline">
                                             @if (Model.producto.Stock_Chico == 0)
                                             {
-                                                <button type="button" class="btn btn-primary btn-lg m-2" disabled style="border-radius:100px;">S</button>
+                                                @*<button type="button" class="btn btn-primary btn-lg m-2" id="btn_s" disabled style="border-radius:100px;">S</button>*@
+                                                        <input type="radio" class="btn-check" name="options" id="option1" disabled  autocomplete="off">
+                                                        <label class="btn btn-secondary" for="option1">S</label>
                                             }
                                             else
                                             {
-                                                <button type="button" class="btn btn-primary btn-lg m-2" style="border-radius:100px;">S</button>
+                                                    @*<button type="button" class="btn btn-primary btn-lg m-2" id="btn_s" style="border-radius:100px;">S</button>*@
+                                                            <input type="radio" class="btn-check" name="options" id="option1" required autocomplete="off">
+                                                            <label class="btn btn-secondary" for="option1">S</label>
                                             }
 
                                             @if (Model.producto.Stock_Medio == 0)
                                             {
-                                                    <button type="button" class="btn btn-primary btn-lg m-2" disabled style="border-radius:100px;">M</button>
+                                                @*<button type="button" class="btn btn-primary btn-lg m-2" id="btn_s" disabled style="border-radius:100px;">S</button>*@
+                                                                <input type="radio" class="btn-check" name="options" id="option2"  disabled autocomplete="off">
+                                                            <label class="btn btn-secondary" for="option2">M</label>
                                             }
                                             else
                                             {
-                                                    <button type="button" class="btn btn-primary btn-lg m-2" style="border-radius:100px;">M</button>
+                                                @*<button type="button" class="btn btn-primary btn-lg m-2" id="btn_s" style="border-radius:100px;">S</button>*@
+                                                                <input type="radio" class="btn-check" name="options" id="option2" required autocomplete="off">
+                                                                <label class="btn btn-secondary" for="option2">M</label>
                                             }
 
                                             @if (Model.producto.Stock_Grande == 0)
                                             {
-                                                    <button type="button" class="btn btn-primary btn-lg m-2" disabled style="border-radius:100px;">L</button>
+                                                @*<button type="button" class="btn btn-primary btn-lg m-2" id="btn_s" disabled style="border-radius:100px;">S</button>*@
+                                                                <input type="radio" class="btn-check" name="options" id="option3" disabled autocomplete="off">
+                                                            <label class="btn btn-secondary" for="option3">L</label>
                                             }
                                             else
                                             {
-                                                    <button type="button" class="btn btn-primary btn-lg m-2"  style="border-radius:100px;">L</button>
+                                                @*<button type="button" class="btn btn-primary btn-lg m-2" id="btn_s" style="border-radius:100px;">S</button>*@
+                                                                <input type="radio" class="btn-check" name="options"  id="option3" required autocomplete="off">
+                                                                <label class="btn btn-secondary" for="option3">L</label>
                                             }
 
                                       
@@ -84,7 +96,7 @@
                             }
                             else
                             {
-                                  <button type="submit" class="btn btn-info form-control btn-lg" style="height:50px;">Agregar al Carro</button>
+                                      <button type="submit" asp-route-Id="@Model.producto.Id" id="agregar" class="btn btn-info form-control btn-lg" style="height:50px;">Agregar al Carro</button>
                             }
 
 
@@ -95,3 +107,5 @@
         </div>
     </form>
 </div>
+
+
