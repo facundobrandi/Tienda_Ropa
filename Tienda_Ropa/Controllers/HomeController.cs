@@ -48,11 +48,27 @@ namespace Tienda_Ropa.Controllers
 
         public IActionResult Detalle(int Id) 
         {
+            List<CarroCompra> carroCompras = new List<CarroCompra>();
+
+            if (HttpContext.Session.Get<IEnumerable<CarroCompra>>(WC.SessionCarroCompras) != null
+                && HttpContext.Session.Get<IEnumerable<CarroCompra>>(WC.SessionCarroCompras).Count() > 0)
+            {
+                carroCompras = HttpContext.Session.Get<List<CarroCompra>>(WC.SessionCarroCompras);
+            }
+
+
+
+
             DetalleVM detalleVM = new DetalleVM()
             {
                 producto = _db.Producto.Include(c => c.categoria).Include(t => t.TipoAplicacion).Where(p => p.Id == Id).FirstOrDefault(),
                 ExiteEnCarro =false,
             };
+
+            foreach (var item in carroCompras) 
+            {
+                if (item.ProductoId == Id) { detalleVM.ExiteEnCarro = true; }
+            }
 
             return View(detalleVM);
         
@@ -71,6 +87,28 @@ namespace Tienda_Ropa.Controllers
                 carroCompras = HttpContext.Session.Get<List<CarroCompra>>(WC.SessionCarroCompras); 
             }
             carroCompras.Add(new CarroCompra { ProductoId = Id });
+            HttpContext.Session.Set(WC.SessionCarroCompras, carroCompras);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoverDeCarro(int Id)
+        {
+            List<CarroCompra> carroCompras = new List<CarroCompra>();
+
+            if (HttpContext.Session.Get<IEnumerable<CarroCompra>>(WC.SessionCarroCompras) != null
+                && HttpContext.Session.Get<IEnumerable<CarroCompra>>(WC.SessionCarroCompras).Count() > 0)
+            {
+                carroCompras = HttpContext.Session.Get<List<CarroCompra>>(WC.SessionCarroCompras);
+            }
+
+            var productoARemover = carroCompras.SingleOrDefault(x => x.ProductoId == Id);
+
+            if(productoARemover != null) 
+            {
+                carroCompras.Remove(productoARemover);            
+            }
+
             HttpContext.Session.Set(WC.SessionCarroCompras, carroCompras);
 
             return RedirectToAction(nameof(Index));
